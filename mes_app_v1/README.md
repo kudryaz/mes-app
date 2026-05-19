@@ -1,95 +1,41 @@
-# MES Application
+# MES Приложение
+Система управления производством (MES) с ролевым доступом для управления производственными процессами.
 
-Manufacturing Execution System with role-based access for production management.
+## Технологический стек
+**Бэкенд:** FastAPI + SQLAlchemy + PostgreSQL  
+**Фронтенд:** React + TypeScript + Vite + Tailwind CSS  
+**Аутентификация:** JWT токены с контролем доступа на основе ролей
 
-## Tech Stack
+## Роли пользователей
 
-- **Backend**: FastAPI + SQLAlchemy + PostgreSQL
-- **Frontend**: React + TypeScript + Vite + Tailwind CSS
-- **Auth**: JWT tokens with role-based access control
+| Роль | Описание |
+|------|----------|
+| **Администратор** | Полный доступ к системе, управление пользователями/цехами/заказами |
+| **Начальник цеха** | Управление заказами и задачами своего цеха |
+| **Оператор** | Просмотр и обновление назначенных задач (оптимизировано для планшетов) |
+| **Менеджер** | Только чтение: дашборд и просмотр заказов |
 
-## Roles
+## Быстрый старт
 
-| Role | Description |
-|------|-------------|
-| Admin | Full system access, manage users/workshops/orders |
-| Workshop Chief | Manage orders and tasks for their workshop |
-| Operator | View and update assigned tasks (tablet-optimized) |
-| Manager | Read-only dashboard and order overview |
-
-## Quick Start
-
-### Backend
+### Бэкенд
 
 ```bash
 cd backend
 
-# Create virtual environment
+# Создать виртуальное окружение
 python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
+source venv/bin/activate  # или venv\Scripts\activate на Windows
 
-# Install dependencies
+# Установить зависимости
 pip install -r requirements.txt
 
-# Create database and run migrations
-# Make sure PostgreSQL is running
-createdb mes_db  # if needed
-alembic upgrade head  # or run seed.py
+# Создать базу данных и применить миграции
+# Убедитесь, что PostgreSQL запущен
+createdb mes_db  # при необходимости
+alembic upgrade head  # или запустите seed.py
 
-# Seed initial data
+# Заполнить начальными данными
 python seed.py
 
-# Start server
+# Запустить сервер
 uvicorn app.main:app --reload --port 8000
-```
-
-API docs available at `http://localhost:8000/api/docs`
-
-### Frontend
-
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start dev server
-npm run dev
-```
-
-Frontend available at `http://localhost:5173`
-
-## Default Credentials
-
-| Login | Password | Role |
-|-------|----------|------|
-| admin | admin | Administrator |
-| chief1 | chief | Workshop Chief |
-| operator1 | operator | Operator |
-| manager | manager | Manager |
-
-## Project Structure
-
-```
-mes_app_v1/
-├── backend/
-│   ├── app/
-│   │   ├── main.py           # FastAPI entry point
-│   │   ├── config.py         # Settings
-│   │   ├── database.py       # SQLAlchemy connection
-│   │   ├── models/           # DB models
-│   │   ├── schemas/          # Pydantic schemas
-│   │   ├── routers/          # API endpoints
-│   │   ├── services/         # Business logic
-│   │   └── dependencies/     # Auth dependencies
-│   ├── alembic/              # DB migrations
-│   ├── seed.py               # Initial data
-│   └── requirements.txt
-└── frontend/
-    └── src/
-        ├── pages/            # Role-based pages
-        ├── components/       # Shared components
-        ├── layouts/          # Dashboard layout
-        ├── services/         # API client
-        └── store/            # Auth store (Zustand)
-```
